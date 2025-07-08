@@ -1,0 +1,226 @@
+/* hide bullshits */
+.ant-popover-arrow,
+.greeting-placeholder,
+.desktop-app-check-notification,
+.messages-message-list-item .tail {
+  display: none !important;
+}
+
+/* remove the default boring background */
+.common-background {
+  background-image: none !important;
+}
+
+/* fullscreen the main UI */
+.home-main-window {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 0 !important;
+  background-color: #f8f8fa !important;
+}
+.home-main-window .SplitPane {
+  border-radius: 0 !important;
+}
+.home-main-window .SplitPane,
+.message-split-view {
+  box-shadow: none !important;
+}
+.sprite_toolbar_ic_settings::before {
+  filter: invert(1);
+}
+
+/* change avatar style */
+.message-split-view .common-avatar {
+  border: none !important;
+  background: none !important;
+}
+.common-avatar > img,
+.common-avatar > .avatar-box {
+  transition: all 300ms;
+}
+.messages-message-list-item:hover .common-avatar > img,
+.messages-message-list-item:hover .common-avatar > .avatar-box,
+.messages-chat-session-list-item:hover .common-avatar > img,
+.messages-chat-session-list-item:hover .common-avatar > .avatar-box {
+  transform: scale(1.3) rotate(-6deg);
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
+}
+
+/* remove boring borders */
+.message-split-view .Resizer.vertical,
+.messages-message-detail-view-header,
+.contact-contact-search-box,
+.messages-message-editor,
+.messages-message-list-item-bubble,
+.messages-stickers-panel,
+.message-combined-message-panel .ant-drawer-header {
+  border: none !important;
+}
+
+/* make combine messages viewer wider */
+.message-combined-message-panel > .ant-drawer-content-wrapper {
+  width: 800px;
+  max-width: 100%;
+  border-radius: 0;
+}
+
+/* round border on chat session list item */
+.messages-chat-session-list-item {
+  border-radius: 6px;
+  margin-left: 10px;
+  width: calc(100% - 12px) !important;
+}
+
+.message-list-container-for-drawer > .Pane1 {
+  background: var(--commonbg_3rd) !important;
+  border-bottom: 1px solid #eee;
+}
+
+.message-split-view.chat-split-view > .Pane1 {
+  border-right: 1px solid #eee;
+}
+
+/* make avatar badge bigger! */
+.avatar-badge {
+  transform: translate(-100%, -80%) scale(3);
+  pointer-events: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .home-main-window {
+    background-color: #1e1f20 !important;
+  }
+
+  .message-list-container-for-drawer > .Pane1,
+  .message-split-view.chat-split-view > .Pane1 {
+    border-color: #333;
+  }
+}
+
+/* make chat session list smaller */
+@media (max-width: 900px) {
+  /* hide sidebar */
+  .sidebar-sidebar {
+    display: none !important;
+  }
+  .chat-session-tabs-bar {
+    display: none !important;
+  }
+  /* hide contact search on top left corner */
+  .messages-message-master-view > .contact-contact-search-box {
+    display: none !important;
+  }
+  .messages-message-master-view [data-test-id='virtuoso-scroller'] {
+    overflow-x: hidden;
+  }
+  /* hide chat session list scrollbar */
+  .messages-chat-session-list .ReactVirtualized__List::-webkit-scrollbar {
+    display: none !important;
+  }
+  /* make sure unread msg badge is visible */
+  .contact-contact-list-item-badge {
+    position: relative;
+    right: 25px;
+    top: 8px;
+  }
+
+  .chat-list-split-view {
+    width: 65px !important;
+  }
+  .chat-room-split-view {
+    width: calc(100vw - 65px) !important;
+    left: 65px !important;
+  }
+  .chat-session-tabs-container {
+    display: none !important;
+  }
+
+  /* align messages sent by me to the left */
+  .messages-message-list-item.isSentByMe,
+  .messages-message-list-item.isSentByMe
+    .message-list-item-container
+    > .wrapper {
+    flex-direction: row !important;
+  }
+  .messages-message-list-item.isSentByMe .content-component-wrapper {
+    margin-right: 0 !important;
+    margin-left: 12px !important;
+  }
+  .messages-message-list-item.isSentByMe .content-info {
+    justify-content: flex-start !important;
+  }
+  .messages-message-list-item.isSentByMe .content-info > .time {
+    text-align: left !important;
+    min-width: auto !important;
+  }
+
+  /* hide the all/unread/later switch */
+  .chat-session-tabs-bar {
+    display: none;
+  }
+
+  .messages-chat-session-list-item {
+    margin-left: 0;
+    width: 100% !important;
+    border-radius: 0;
+  }
+}
+
+/* modify msg delivery status ticks style */
+.messages-message-list-item .beside-content .content-info svg {
+  width: 6px !important;
+  height: 6px !important;
+  margin-top: 4px;
+  border-radius: 100%;
+}
+.messages-message-list-item
+  .beside-content
+  .content-info
+  svg.ele_content_ic_sent {
+  background-color: #16c42a;
+}
+.messages-message-list-item
+  .beside-content
+  .content-info
+  svg.ele_content_ic_read {
+  background-color: #1b92f5;
+}
+
+.messages-chat-session-list-item .label {
+  padding: 0 !important;
+}
+
+/* move message editor toolbar to the bottom */
+.messages-message-editor {
+  padding-top: 10px !important;
+}
+.messages-message-editor .toolbar {
+  position: absolute !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 99999999 !important;
+}
+/* and hide the useless footer, who needs a button to send msg! */
+.messages-message-editor .footer {
+  display: none !important;
+}
+
+/* change message text style */
+.messages-message-list-item-text-content strong {
+  background-color: yellow !important;
+  color: black !important;
+  padding: 0 4px !important;
+  border-radius: 4px !important;
+}
+.messages-message-list-item-mention {
+  background-color: black !important;
+  color: white !important;
+  padding: 0 4px !important;
+  border-radius: 4px !important;
+}
+
+/* make message bubble wider */
+.message-list-item-container {
+  width: 100% !important;
+  max-width: 100% !important;
+}

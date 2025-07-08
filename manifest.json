@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Sea Turtle",
+  "version": "1.0.0",
+  "description": "AI powered super SeaTalk.",
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://seatalkweb.com/*"
+      ],
+      "css": [
+        "content.css"
+      ]
+    }
+  ]
+}
