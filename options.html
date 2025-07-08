@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Options</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .container { width: 400px; }
+    label { display: block; margin-bottom: 5px; }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #status { margin-top: 10px; color: green; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Options</h1>
+    <div>
+      <label for="apiEndpoint">API Endpoint (URL):</label>
+      <input type="text" id="apiEndpoint">
+    </div>
+    <div>
+      <label for="apiToken">API Token:</label>
+      <input type="password" id="apiToken">
+    </div>
+    <button id="save">Save</button>
+    <div id="status"></div>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>
