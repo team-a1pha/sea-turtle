@@ -9,8 +9,10 @@
     "128": "icons/icon-128.png"
   },
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "storage"
   ],
+  "options_page": "options.html",
   "content_scripts": [
     {
       "matches": [
