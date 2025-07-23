@@ -178,6 +178,9 @@
   .content-info
   svg.ele_content_ic_sent {
   background-color: #16c42a;
+  border-radius: 3px !important;
+  width: 10px !important;
+  height: 10px !important;
 }
 .messages-message-list-item
   .beside-content
@@ -196,14 +199,14 @@
 }
 .messages-message-editor .toolbar {
   position: absolute !important;
-  right: 320px !important;
-  bottom: 12px !important;
+  right: 120px !important;
+  bottom: 10px !important;
   z-index: 99999999 !important;
 }
-/* and hide the useless footer, who needs a button to send msg! */
-/* .messages-message-editor .footer {
+
+.messages-message-editor .footer .tips {
   display: none !important;
-} */
+}
 
 /* change message text style */
 .messages-message-list-item-text-content strong {
