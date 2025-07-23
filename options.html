@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>SeaTurtle Options</title>
+  <link rel="icon" href="icons/icon-48.png" type="image/png" />
+  <script src="libs/tailwindcss.js"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet" />
+  <style type="text/tailwindcss">
+    :root {
+            --primary-color: #0c7ff2;
+            --background-color: #f8fafc;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --input-bg: #ffffff;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+        }
+        .turtle-icon {
+            color: var(--primary-color);
+        }
+    </style>
+  <script src="options.js" defer></script>
+</head>
+
+<body class="min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-lg mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
+    <div class="px-8 py-10">
+      <header class="flex flex-col items-center mb-10">
+        <div class="p-3 bg-blue-100 rounded-full mb-4">
+          <img src="icons/icon-128.png" alt="SeaTurtle" class="size-20">
+        </div>
+        <h1 class="text-3xl font-bold text-center text-[var(--text-primary)]">SeaTurtle Options</h1>
+        <p class="text-[var(--text-secondary)] mt-2 text-center">Manage your Brave Search API Key</p>
+      </header>
+      <main>
+        <div class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-[var(--text-primary)] mb-2" for="apiKey">Brave Search API
+              Key</label>
+            <div class="relative">
+              <input
+                class="form-input block w-full rounded-md border-0 py-3 px-4 text-[var(--text-primary)] shadow-sm ring-1 ring-inset ring-[var(--border-color)] placeholder:text-[var(--text-secondary)] focus:ring-2 focus:ring-inset focus:ring-[var(--primary-color)] sm:text-sm sm:leading-6 transition-shadow duration-200"
+                id="apiKey" data-option="apiKey" placeholder="Enter your API key" type="password" />
+            </div>
+          </div>
+          <button
+            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[var(--primary-color)] hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-color)] transition-colors duration-200"
+            id="saveButton" type="submit">
+            Save
+          </button>
+        </div>
+        <div class="mt-8 text-center">
+          <p class="text-sm text-[var(--text-secondary)]">
+            Don't have an API key?
+            <a class="font-medium text-[var(--primary-color)] hover:underline"
+              href="https://api-dashboard.search.brave.com/app/keys" rel="noopener noreferrer" target="_blank">
+              Create one here.
+            </a>
+          </p>
+        </div>
+      </main>
+    </div>
+  </div>
+
+</body>
+
+</html>
