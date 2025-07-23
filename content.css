@@ -196,14 +196,14 @@
 }
 .messages-message-editor .toolbar {
   position: absolute !important;
-  right: 0 !important;
-  bottom: 0 !important;
+  right: 320px !important;
+  bottom: 12px !important;
   z-index: 99999999 !important;
 }
 /* and hide the useless footer, who needs a button to send msg! */
-.messages-message-editor .footer {
+/* .messages-message-editor .footer {
   display: none !important;
-}
+} */
 
 /* change message text style */
 .messages-message-list-item-text-content strong {
