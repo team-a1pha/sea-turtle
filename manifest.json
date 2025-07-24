@@ -10,7 +10,12 @@
   },
   "options_page": "options.html",
   "permissions": [
-    "storage"
+    "activeTab",
+    "storage",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "https://api.search.brave.com/*"
   ],
   "content_scripts": [
     {
@@ -21,5 +26,14 @@
         "content.css"
       ]
     }
-  ]
+  ],
+  "action": {
+    "default_title": "Image Search"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "side-panel.html"
+  }
 }
