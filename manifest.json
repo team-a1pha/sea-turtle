@@ -10,7 +10,8 @@
   },
   "options_page": "options.html",
   "permissions": [
-    "storage"
+    "storage",
+    "sidePanel"
   ],
   "content_scripts": [
     {
@@ -21,5 +22,14 @@
         "content.css"
       ]
     }
-  ]
+  ],
+  "action": {
+    "default_title": "Image Search"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "side-panel.html"
+  }
 }
