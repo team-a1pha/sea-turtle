@@ -1,35 +1,51 @@
-/* global chrome */
+/** @type {HTMLInputElement | null} */
+const searchInput = /** @type {HTMLInputElement} */ (
+  document.getElementById('search-input')
+);
+/** @type {HTMLDivElement | null} */
+const searchResults = /** @type {HTMLDivElement} */ (
+  document.getElementById('search-results')
+);
+/** @type {HTMLInputElement | null} */
+const transparentBackground = /** @type {HTMLInputElement} */ (
+  document.getElementById('transparent-background')
+);
 
-const searchInput = document.getElementById('search-input');
-const searchResults = document.getElementById('search-results');
-const largeSize = document.getElementById('large-size');
-const transparentBackground = document.getElementById('transparent-background');
+function loadApiKey() {
+  return new Promise((resolve) => {
+    chrome.storage.sync.get(['apiKey'], (result) => resolve(result.apiKey));
+  });
+}
 
-let apiKey;
-
-chrome.storage.sync.get(['apiKey'], (result) => {
-  apiKey = result.apiKey;
-});
-
-searchInput.addEventListener('keypress', (event) => {
+searchInput?.addEventListener('keypress', (event) => {
   if (event.key === 'Enter') {
     search();
   }
 });
 
 async function search() {
-  const query = searchInput.value;
-  if (!query) {
+  const query = searchInput?.value;
+  if (!query || !searchResults) {
     return;
   }
 
-  let url = `https://api.search.brave.com/res/v1/images/search?q=${query}`;
-  if (largeSize.checked) {
-    url += '&size=large';
+  searchResults.innerHTML = 'Loading...';
+
+  const apiKey = await loadApiKey();
+  if (!apiKey) {
+    alert('Please set your API key in the extension options!');
+    searchResults.innerHTML = '';
+    return;
   }
-  if (transparentBackground.checked) {
-    url += '&transparent=true';
+
+  const searchQuery = [query];
+  if (transparentBackground?.checked) {
+    searchQuery.push('transparent background');
   }
+
+  const url = `https://api.search.brave.com/res/v1/images/search?q=${encodeURIComponent(
+    searchQuery.join(' '),
+  )}`;
 
   const response = await fetch(url, {
     headers: {
@@ -42,12 +58,18 @@ async function search() {
 }
 
 function displayResults(results) {
+  if (!searchResults) {
+    return;
+  }
+
   searchResults.innerHTML = '';
   results.forEach((result) => {
     const img = document.createElement('img');
     img.src = result.thumbnail.src;
+    img.className =
+      'cursor-pointer rounded-md hover:shadow-xl transition-shadow';
     img.addEventListener('click', () => {
-      console.log(result.url);
+      console.log(result, result.url);
     });
     searchResults.appendChild(img);
   });
