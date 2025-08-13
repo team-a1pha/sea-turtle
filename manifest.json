@@ -14,9 +14,26 @@
       "matches": [
         "https://seatalkweb.com/*"
       ],
+      "js": [
+        "content-scripts/sticker-pack.js"
+      ],
       "css": [
-        "content.css"
+        "content-scripts/custom-style.css"
       ]
     }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/stickers/*",
+        "assets/stickers/*/*"
+      ],
+      "matches": [
+        "https://seatalkweb.com/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "clipboardWrite"
   ]
 }
