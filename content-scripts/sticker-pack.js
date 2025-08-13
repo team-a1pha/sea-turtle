@@ -135,15 +135,17 @@
         ]);
 
         editor.focus();
-        const pasteEvent = new Event('paste', {
+
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(
+          new File([imageBlob], 'sticker.png', { type: 'image/png' }),
+        );
+        const pasteEvent = new ClipboardEvent('paste', {
           bubbles: true,
           cancelable: true,
           composed: true,
+          clipboardData: dataTransfer,
         });
-        pasteEvent.clipboardData = new DataTransfer();
-        pasteEvent.clipboardData.items.add(
-          new File([imageBlob], 'sticker.png', { type: 'image/png' }),
-        );
         editor.dispatchEvent(pasteEvent);
       } catch (err) {
         console.error('Failed to paste sticker: ', err);
