@@ -34,6 +34,10 @@
     }
   ],
   "permissions": [
-    "clipboardWrite"
-  ]
+    "clipboardWrite",
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
 }
