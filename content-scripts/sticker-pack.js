@@ -85,7 +85,7 @@
       grid.style.right = `0`;
       grid.style.overflow = 'auto';
       grid.style.padding = '10px';
-      grid.style.backgroundColor = '#f2f2f6';
+      grid.style.backgroundColor = 'transparent';
       grid.dataset.packId = pack.id;
 
       pack.files.forEach((fileName) => {
