@@ -82,6 +82,7 @@
         item.className = 'sealabs-sticker';
         const img = document.createElement('img');
         const targetUrl = getStickerAssetUrl(pack.id, fileName);
+        item.dataset.stickerUrl = targetUrl;
         img.src = targetUrl;
         img.alt = '';
         item.appendChild(img);
@@ -114,6 +115,49 @@
       );
       if (targetGrid) {
         targetGrid.classList.add('selected');
+      }
+    });
+
+    // Click handling: paste sticker
+    stickerBox.addEventListener('click', async (event) => {
+      const sticker = event.target.closest('.sealabs-sticker');
+      if (!sticker) return;
+      const stickerUrl = sticker.dataset.stickerUrl;
+      if (!stickerUrl) return;
+
+      try {
+        const response = await fetch(stickerUrl);
+        const imageBlob = await response.blob();
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            'image/png': imageBlob,
+          }),
+        ]);
+
+        editor.focus();
+
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(
+          new File([imageBlob], 'sticker.png', { type: 'image/png' }),
+        );
+        const pasteEvent = new ClipboardEvent('paste', {
+          bubbles: true,
+          cancelable: true,
+          composed: true,
+          clipboardData: dataTransfer,
+        });
+        editor.dispatchEvent(pasteEvent);
+
+        setTimeout(() => {
+          const sendButton = document.querySelector(
+            '.send-message-dropdown-button-container > button',
+          );
+          if (sendButton) {
+            sendButton.click();
+          }
+        }, 100);
+      } catch (err) {
+        console.error('Failed to paste sticker: ', err);
       }
     });
   }
