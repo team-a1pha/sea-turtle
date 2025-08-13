@@ -147,6 +147,15 @@
           clipboardData: dataTransfer,
         });
         editor.dispatchEvent(pasteEvent);
+
+        setTimeout(() => {
+          const sendButton = document.querySelector(
+            '.send-message-dropdown-button-container > button',
+          );
+          if (sendButton) {
+            sendButton.click();
+          }
+        }, 100);
       } catch (err) {
         console.error('Failed to paste sticker: ', err);
       }
