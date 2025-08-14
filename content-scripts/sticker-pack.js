@@ -74,7 +74,7 @@
     if (navEl.dataset.sealabsStickersInitialized === 'true') return;
     navEl.dataset.sealabsStickersInitialized = 'true';
 
-    // Build thumbnails
+    // Build thumbnails (insert starting at second position)
     stickerPacks.forEach((pack, index) => {
       const tab = document.createElement('div');
       tab.className = 'tab';
@@ -83,7 +83,8 @@
         pack.thumbnail,
       )}")`;
       tab.dataset.packId = pack.id;
-      navEl.appendChild(tab);
+      const insertAt = Math.min(2 + index, navEl.children.length);
+      navEl.insertBefore(tab, navEl.children[insertAt] || null);
     });
 
     // Build sticker grids
