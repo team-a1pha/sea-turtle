@@ -24,9 +24,21 @@
         '6.png',
         '7.png',
         '8.png',
-        '9.png',
         '10.png',
+        '11.png',
       ],
+    },
+    {
+      id: 'simpsons',
+      name: 'Simpsons',
+      thumbnail: 'thumbnail.png',
+      files: ['1.png', '2.png', '4.png', '5.png', '6.png', '7.png', '8.png'],
+    },
+    {
+      id: 'rick-and-morty',
+      name: 'Rick and Morty',
+      thumbnail: 'thumbnail.png',
+      files: ['1.png', '2.png', '4.png', '5.png', '7.png'],
     },
   ];
 
