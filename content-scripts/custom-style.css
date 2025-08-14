@@ -57,6 +57,11 @@
   border: none !important;
 }
 
+/* remove margin from sticker pack thumbnails */
+.sealabs-stickers-panel .tabs .sticker-nav-content .tab {
+  margin: 0 !important;
+}
+
 /* make combine messages viewer wider */
 .message-combined-message-panel > .ant-drawer-content-wrapper {
   width: 800px;

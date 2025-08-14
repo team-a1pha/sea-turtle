@@ -34,34 +34,45 @@
     return chrome.runtime.getURL(`assets/stickers/${packId}/${fileName}`);
   }
 
+  /**
+   * Wait for an element matching selector under the given root.
+   * @param {string} selector
+   * @param {Document|Element} [root=document]
+   * @returns {Promise<HTMLElement>}
+   */
   function waitForElement(selector, root = document) {
     return new Promise((resolve) => {
       const existing = root.querySelector(selector);
       if (existing) {
-        resolve(existing);
+        resolve(/** @type {HTMLElement} */ (existing));
         return;
       }
       const observer = new MutationObserver(() => {
         const el = root.querySelector(selector);
         if (el) {
           observer.disconnect();
-          resolve(el);
+          resolve(/** @type {HTMLElement} */ (el));
         }
       });
       observer.observe(root, { childList: true, subtree: true });
     });
   }
 
-  async function initStickersUI() {
+  /**
+   * Initialize stickers UI within a given root (Document or Element).
+   * @param {Document|Element} root
+   */
+  async function initStickersUIInRoot(root) {
     const [editor, navContainer, stickerBox] = await Promise.all([
-      waitForElement('.seatalk-editor > [contenteditable="true"]'),
-      waitForElement('.sealabs-stickers-panel .sticker-nav-content'),
-      waitForElement('.sealabs-stickers-panel .sticker-box'),
+      waitForElement('.seatalk-editor > [contenteditable="true"]', root),
+      waitForElement('.sealabs-stickers-panel .sticker-nav-content', root),
+      waitForElement('.sealabs-stickers-panel .sticker-box', root),
     ]);
 
     if (!navContainer || !stickerBox) return;
-    if (navContainer.dataset.sealabsStickersInitialized === 'true') return;
-    navContainer.dataset.sealabsStickersInitialized = 'true';
+    const navEl = /** @type {HTMLElement} */ (navContainer);
+    if (navEl.dataset.sealabsStickersInitialized === 'true') return;
+    navEl.dataset.sealabsStickersInitialized = 'true';
 
     // Build thumbnails
     stickerPacks.forEach((pack, index) => {
@@ -72,7 +83,7 @@
         pack.thumbnail,
       )}")`;
       tab.dataset.packId = pack.id;
-      navContainer.appendChild(tab);
+      navEl.appendChild(tab);
     });
 
     // Build sticker grids
@@ -104,12 +115,13 @@
     });
 
     // Click handling: switch selected grid
-    navContainer.addEventListener('click', (event) => {
+    navEl.addEventListener('click', (event) => {
+      if (!(event.target instanceof Element)) return;
       const tab = event.target.closest('.tab');
       if (!tab) return;
 
       // update selected class on all tabs
-      navContainer.querySelectorAll('.tab').forEach((el) => {
+      navEl.querySelectorAll('.tab').forEach((el) => {
         el.classList.remove('selected');
       });
       tab.classList.add('selected');
@@ -119,7 +131,7 @@
         el.classList.remove('selected');
       });
 
-      const packId = tab.dataset.packId;
+      const packId = /** @type {HTMLElement} */ (tab).dataset.packId;
       if (!packId) return;
       const targetGrid = stickerBox.querySelector(
         `.sticker-grid-box[data-pack-id="${packId}"]`,
@@ -131,9 +143,11 @@
 
     // Click handling: paste sticker
     stickerBox.addEventListener('click', async (event) => {
+      if (!(event.target instanceof Element)) return;
       const sticker = event.target.closest('.sealabs-sticker');
       if (!sticker) return;
-      const stickerUrl = sticker.dataset.stickerUrl;
+      const stickerUrl = /** @type {HTMLElement} */ (sticker).dataset
+        .stickerUrl;
       if (!stickerUrl) return;
 
       try {
@@ -160,8 +174,18 @@
         editor.dispatchEvent(pasteEvent);
 
         setTimeout(() => {
-          const sendButton = document.querySelector(
-            '.send-message-dropdown-button-container > button',
+          const scope = /** @type {Element|Document} */ (root);
+          const sendButton = /** @type {HTMLButtonElement|null} */ (
+            (scope instanceof Element
+              ? scope.querySelector(
+                  '.send-message-dropdown-button-container > button',
+                )
+              : document.querySelector(
+                  '.send-message-dropdown-button-container > button',
+                )) ||
+              document.querySelector(
+                '.send-message-dropdown-button-container > button',
+              )
           );
           if (sendButton) {
             sendButton.click();
@@ -173,5 +197,46 @@
     });
   }
 
-  initStickersUI().catch(() => {});
+  /**
+   * Observe dynamically created thread editor helper panels and initialize stickers in each.
+   */
+  function initThreadObserver() {
+    // Initialize for any existing thread panels immediately
+    document
+      .querySelectorAll('.thread-detail-page-split-view')
+      .forEach((container) => {
+        const el = /** @type {HTMLElement} */ (container);
+        if (el.dataset.sealabsStickersInitStarted === 'true') return;
+        el.dataset.sealabsStickersInitStarted = 'true';
+        initStickersUIInRoot(el).catch(() => {});
+      });
+
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        mutation.addedNodes.forEach((node) => {
+          if (!(node instanceof Element)) return;
+
+          const candidates = node.matches('.thread-detail-page-split-view')
+            ? [node]
+            : Array.from(
+                node.querySelectorAll('.thread-detail-page-split-view'),
+              );
+
+          candidates.forEach((container) => {
+            const el = /** @type {HTMLElement} */ (container);
+            if (el.dataset.sealabsStickersInitStarted === 'true') return;
+            el.dataset.sealabsStickersInitStarted = 'true';
+            initStickersUIInRoot(el).catch(() => {});
+          });
+        });
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  // Initialize for main editor area
+  initStickersUIInRoot(document).catch(() => {});
+  // Initialize for dynamic thread panels
+  initThreadObserver();
 })();
