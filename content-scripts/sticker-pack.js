@@ -40,6 +40,21 @@
       thumbnail: 'thumbnail.png',
       files: ['1.png', '2.png', '4.png', '5.png', '7.png'],
     },
+    {
+      id: 'this-is-fine',
+      name: 'This Is Fine',
+      thumbnail: 'thumbnail.png',
+      files: [
+        '1.png',
+        '2.png',
+        '3.png',
+        '4.png',
+        '5.png',
+        '6.png',
+        '7.png',
+        '8.png',
+      ],
+    },
   ];
 
   function getStickerAssetUrl(packId, fileName) {
