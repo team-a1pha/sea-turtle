@@ -57,6 +57,10 @@
   border: none !important;
 }
 
+.messages-message-list-item-image-content img {
+  object-fit: contain !important;
+}
+
 /* remove margin from sticker pack thumbnails */
 .sealabs-stickers-panel .tabs .sticker-nav-content .tab {
   margin: 0 !important;
